@@ -9,219 +9,374 @@
 <link href="https://fonts.googleapis.com/css2?family=Anek+Bangla:wdth,wght@75..125,300..800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EEF2F0; --sheet:#FFFFFF; --ink:#1C2B33; --muted:#5C6B70; --rule:#D3DCD8;
-  --bubble:#B8325A; --bubble-soft:#F6E3E9; --pass:#2E7D4F; --pass-soft:#DDEFE3; --warn:#9A5B00; --warn-soft:#FBEFD9;
-  --stripe:#F6F8F7; --focus:#2F6FB3;
+  --bg:#EEF2EF; --surface:#FFFFFF; --surface-2:#F5F8F6; --ink:#12241D; --muted:#5E6E67; --line:#DCE4DF;
+  --brand:#127A52; --brand-ink:#FFFFFF; --brand-soft:#DCF1E6; --band:#0E3326; --band-ink:#EAF5EF; --band-muted:#9CC3B0;
+  --accent:#D1386A; --accent-soft:#FBE4EC; --warn:#A35F00; --warn-soft:#FDF0DA;
+  --gold:#FBE3A6; --gold-ink:#6E4B00; --silver:#E2E8EC; --silver-ink:#3E4C55; --bronze:#F4D6C1; --bronze-ink:#7A3F17;
+  --focus:#2F7DD1; --shadow:0 1px 2px rgba(14,51,38,.06),0 12px 32px -18px rgba(14,51,38,.28);
+  --r-lg:18px; --r-md:12px; --r-sm:9px;
   --font:"Anek Bangla","Noto Sans Bengali","Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#111715; --sheet:#1A221F; --ink:#E4EBE8; --muted:#9AA8A3; --rule:#2E3935;
-    --bubble:#E47C9B; --bubble-soft:#3A2129; --pass:#6CC48F; --pass-soft:#1F3428; --warn:#E8B45E; --warn-soft:#3A2E17;
-    --stripe:#1F2825; --focus:#7DB3F0;
+    --bg:#0C1411; --surface:#141E1A; --surface-2:#1A2622; --ink:#E3EEE8; --muted:#94A69E; --line:#26342E;
+    --brand:#3FBF86; --brand-ink:#06150E; --brand-soft:#173327; --band:#091A13; --band-ink:#E3EEE8; --band-muted:#7FA895;
+    --accent:#F07A9E; --accent-soft:#3A1C27; --warn:#EDB45A; --warn-soft:#352914;
+    --gold:#4A3A12; --gold-ink:#FBDB8C; --silver:#2C363C; --silver-ink:#D5DEE4; --bronze:#43291A; --bronze-ink:#F2C3A0;
+    --focus:#79B4F2; --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -18px rgba(0,0,0,.6);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#111715; --sheet:#1A221F; --ink:#E4EBE8; --muted:#9AA8A3; --rule:#2E3935;
-  --bubble:#E47C9B; --bubble-soft:#3A2129; --pass:#6CC48F; --pass-soft:#1F3428; --warn:#E8B45E; --warn-soft:#3A2E17;
-  --stripe:#1F2825; --focus:#7DB3F0;
+  --bg:#0C1411; --surface:#141E1A; --surface-2:#1A2622; --ink:#E3EEE8; --muted:#94A69E; --line:#26342E;
+  --brand:#3FBF86; --brand-ink:#06150E; --brand-soft:#173327; --band:#091A13; --band-ink:#E3EEE8; --band-muted:#7FA895;
+  --accent:#F07A9E; --accent-soft:#3A1C27; --warn:#EDB45A; --warn-soft:#352914;
+  --gold:#4A3A12; --gold-ink:#FBDB8C; --silver:#2C363C; --silver-ink:#D5DEE4; --bronze:#43291A; --bronze-ink:#F2C3A0;
+  --focus:#79B4F2; --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px -18px rgba(0,0,0,.6);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
 button,input,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-.wrap{max-width:1240px;margin:0 auto;padding:28px 20px 80px}
-header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
-h1{font-size:clamp(34px,6vw,54px);line-height:1;margin:0;font-weight:750;font-stretch:78%;letter-spacing:-.01em}
-.lede{margin:10px 0 0;color:var(--muted);max-width:62ch}
-.bubbles-deco{display:flex;gap:7px}
-.bubbles-deco span{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bubble);display:grid;place-items:center;font-size:12px;color:var(--bubble);font-weight:600}
-.bubbles-deco span.on{background:var(--bubble);color:var(--sheet)}
+.num{font-variant-numeric:tabular-nums}
 
-section.step{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;margin-bottom:18px;display:grid;grid-template-columns:64px 1fr}
-.step-mark{border-right:1px dashed var(--rule);display:flex;justify-content:center;padding-top:22px}
-.bubble{width:34px;height:34px;border-radius:50%;border:2px solid var(--bubble);color:var(--bubble);display:grid;place-items:center;font-weight:700;font-size:18px;transition:background .25s,color .25s}
-.step.done .bubble{background:var(--bubble);color:var(--sheet)}
-.step-body{padding:20px 22px 22px;min-width:0}
-.step h2{font-size:23px;margin:0 0 4px;font-weight:650;font-stretch:88%}
-.step .hint{margin:0 0 16px;color:var(--muted);font-size:15.5px}
-.step.locked{opacity:.55}
-.step.locked .step-body > *:not(h2):not(.hint){display:none}
+/* ---------- header band ---------- */
+.band{background:var(--band);color:var(--band-ink);position:relative;overflow:hidden}
+.band::after{content:"";position:absolute;inset:0 0 0 auto;width:min(46vw,560px);opacity:.14;pointer-events:none;
+  background:radial-gradient(circle,currentColor 0 4px,transparent 4.6px) 0 0/30px 30px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}
+.band-inner{max-width:1320px;margin:0 auto;padding:26px 24px 92px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;z-index:1}
+.band.compact .band-inner{padding-bottom:26px}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:48px;height:48px;border-radius:14px;background:var(--brand);display:grid;place-items:center;flex:none}
+.logo svg{width:28px;height:28px}
+h1{margin:0;font-size:clamp(26px,3.4vw,34px);line-height:1.05;font-weight:720;font-stretch:84%}
+.brand p{margin:3px 0 0;color:var(--band-muted);font-size:15px}
+.progress{list-style:none;margin:0;padding:6px;display:flex;gap:4px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:999px}
+.progress li{display:flex;align-items:center;gap:8px;padding:5px 14px 5px 6px;border-radius:999px;font-size:14.5px;color:var(--band-muted);white-space:nowrap;transition:background .3s,color .3s}
+.progress .b{width:26px;height:26px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-weight:700;font-size:14px;transition:all .3s}
+.progress li.active{color:var(--band-ink);background:rgba(255,255,255,.1)}
+.progress li.done{color:var(--band-ink)}
+.progress li.done .b{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
 
-.drop{border:2px dashed var(--rule);border-radius:6px;padding:30px 20px;text-align:center;cursor:pointer;background:
-  radial-gradient(circle at 12px 12px, var(--bubble-soft) 3px, transparent 3.5px) 0 0/26px 26px;transition:border-color .2s}
-.drop:hover,.drop.over{border-color:var(--bubble)}
-.drop strong{display:block;font-size:20px;font-weight:600}
-.drop small{color:var(--muted);font-size:15px}
-.drop input{display:none}
+.wrap{max-width:1320px;margin:-66px auto 0;padding:0 24px 64px;position:relative;z-index:2}
+.band.compact + .wrap{margin-top:22px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
 
-.filebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-bottom:16px}
-.filebar .fname{font-weight:600;overflow-wrap:anywhere}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;padding:2px 10px;border-radius:99px;background:var(--stripe);border:1px solid var(--rule);white-space:nowrap}
-.linkbtn{background:none;border:none;color:var(--focus);cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px;font-size:15px}
+/* ---------- empty state ---------- */
+.intro{max-width:880px;margin:0 auto}
+.drop{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:54px 28px 46px;cursor:pointer;position:relative;transition:border-color .2s,transform .2s}
+.drop::before{content:"";position:absolute;inset:14px;border:2px dashed var(--line);border-radius:14px;pointer-events:none;transition:border-color .2s,background .2s}
+.drop:hover::before,.drop.over::before{border-color:var(--brand);background:color-mix(in srgb,var(--brand-soft) 45%,transparent)}
+.drop input{position:absolute;width:1px;height:1px;opacity:0}
+.drop:focus-within::before{border-color:var(--focus)}
+.sheet-ico{width:88px;height:88px;border-radius:24px;background:var(--brand-soft);display:grid;place-items:center;margin-bottom:6px;position:relative}
+.sheet-ico svg{width:50px;height:50px}
+.drop h2{margin:0;font-size:clamp(22px,3vw,28px);font-weight:680;font-stretch:88%;line-height:1.2}
+.drop p{margin:0;color:var(--muted);max-width:52ch}
+.drop .pill-btn{margin-top:10px}
+.drop small{color:var(--muted);font-size:14px;display:flex;align-items:center;gap:6px;margin-top:4px}
+.drop .err{color:var(--accent);font-weight:550;min-height:24px}
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;padding:0;list-style:none;counter-reset:s}
+.howto li{padding:16px 18px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);font-size:15px;color:var(--muted);counter-increment:s}
+.howto li::before{content:counter(s,bengali);display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-weight:700;margin-bottom:8px}
+.howto b{display:block;color:var(--ink);font-weight:600;font-size:16px;margin-bottom:2px}
 
-.fields{display:grid;grid-template-columns:minmax(0,1fr) 170px;gap:14px}
-label.f{display:flex;flex-direction:column;gap:4px;font-size:14.5px;color:var(--muted)}
-.f input,.qe input,textarea,.search{background:var(--paper);border:1px solid var(--rule);border-radius:4px;padding:8px 10px;font-size:17px;min-width:0}
-.f input:focus,.qe input:focus,textarea:focus,.search:focus{border-color:var(--focus);outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--focus) 30%,transparent)}
-details{margin-top:14px;border-top:1px solid var(--rule);padding-top:10px}
-summary{cursor:pointer;font-weight:550;font-size:16px}
-.qlist{display:grid;gap:4px;margin-top:10px;max-height:300px;overflow:auto}
-.qlist label{display:grid;grid-template-columns:22px 1fr auto;gap:8px;align-items:start;font-size:15px;padding:4px 6px;border-radius:4px}
-.qlist label:nth-child(odd){background:var(--stripe)}
-.qlist .qh{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-line}
-.qlist small{color:var(--muted);white-space:nowrap}
+/* ---------- buttons & fields ---------- */
+.pill-btn,.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid transparent;transition:background .15s,transform .1s,box-shadow .15s}
+.pill-btn{background:var(--brand);color:var(--brand-ink);padding:11px 24px;font-size:16.5px;box-shadow:0 6px 18px -8px color-mix(in srgb,var(--brand) 70%,transparent)}
+.pill-btn:hover{filter:brightness(1.07)}
+.btn{padding:8px 16px;background:var(--surface);border-color:var(--line);font-size:15px}
+.btn:hover{background:var(--surface-2)}
+.btn:active,.pill-btn:active{transform:translateY(1px)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--muted);padding:6px 10px}
+.btn.ghost:hover{color:var(--ink);background:var(--surface-2)}
+.btn.danger:hover{color:var(--accent)}
+.btn:disabled,.pill-btn:disabled{opacity:.55;cursor:not-allowed}
+.btn svg,.pill-btn svg{width:18px;height:18px;flex:none}
+.field{display:flex;flex-direction:column;gap:5px}
+.field > span{font-size:13.5px;color:var(--muted);font-weight:500}
+.input{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px 12px;font-size:16px;min-width:0;width:100%;transition:border-color .15s,box-shadow .15s,background .15s}
+.input:hover{border-color:color-mix(in srgb,var(--muted) 40%,var(--line))}
+.input:focus{outline:none;border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 22%,transparent)}
 
-.notes{display:grid;gap:8px;margin-top:14px}
-.note{padding:8px 12px;border-radius:4px;font-size:15.5px;background:var(--warn-soft);color:var(--ink);border-left:3px solid var(--warn)}
-.note b{font-weight:600}
+/* ---------- workspace ---------- */
+.work{display:grid;grid-template-columns:minmax(0,360px) minmax(0,1fr);gap:20px;align-items:start}
+.work > *{min-width:0}
+.side{display:grid;gap:16px;min-width:0}
+.panel{padding:18px 18px 20px;min-width:0;overflow-wrap:anywhere}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel h3{margin:0;font-size:18px;font-weight:650;font-stretch:92%;display:flex;align-items:center;gap:9px}
+.panel h3 .n{width:24px;height:24px;border-radius:50%;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;font-size:13px;font-weight:700}
+.filebox{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--line);margin-bottom:14px}
+.filebox .fi{width:38px;height:38px;border-radius:10px;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;flex:none;font-size:12px;font-weight:700}
+.filebox .meta{min-width:0;flex:1}
+.filebox .fname{font-weight:600;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filebox .sub{font-size:13.5px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,112px);gap:10px}
+.opt{display:grid;grid-template-columns:18px minmax(0,1fr);gap:9px;align-items:start;margin-top:12px;font-size:14px;color:var(--muted);cursor:pointer}
+.opt input{margin-top:3px;accent-color:var(--brand)}
+.opt b{color:var(--ink);font-weight:650}
+details.qs{margin-top:12px;border-radius:var(--r-md);border:1px solid var(--line)}
+details.qs summary{list-style:none;cursor:pointer;padding:9px 12px;font-size:14.5px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+details.qs summary::-webkit-details-marker{display:none}
+details.qs summary::after{content:"";width:8px;height:8px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s;margin-right:4px}
+details.qs[open] summary::after{transform:rotate(-135deg)}
+.qlist{display:grid;gap:2px;padding:0 6px 8px;max-height:280px;overflow:auto}
+.qlist label{display:grid;grid-template-columns:18px minmax(0,1fr);gap:9px;align-items:start;font-size:14px;padding:7px 6px;border-radius:8px;cursor:pointer}
+.qlist label > span{min-width:0}
+.qlist label:hover{background:var(--surface-2)}
+.qlist input{margin-top:4px;accent-color:var(--brand)}
+.qlist .qh{overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:pre-line;min-width:0;max-width:100%;overflow-wrap:anywhere}
+.qlist small{display:block;color:var(--muted);font-size:12.5px}
 
-.qe{display:grid;grid-template-columns:minmax(120px,190px) minmax(90px,120px) auto;gap:10px;align-items:end;justify-content:start}
-.qe label{display:flex;flex-direction:column;gap:4px;font-size:14.5px;color:var(--muted)}
-.qe input{font-size:22px;font-weight:600;padding:6px 10px;font-variant-numeric:tabular-nums}
-.btn{border:1.5px solid var(--ink);background:var(--sheet);border-radius:4px;padding:9px 16px;cursor:pointer;font-weight:600;white-space:nowrap}
-.btn:hover{background:var(--stripe)}
-.btn.primary{background:var(--pass);border-color:var(--pass);color:#fff}
-.btn.primary:hover{filter:brightness(1.08)}
-:root[data-theme="dark"] .btn.primary{color:#0E1A13}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0E1A13}}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.lookup{min-height:26px;margin-top:8px;font-size:16px}
-.lookup .who{font-weight:600}
-.lookup .miss{color:var(--warn)}
-.lookup .ok{color:var(--pass)}
-.markstats{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:10px;font-size:15.5px;color:var(--muted)}
-textarea{width:100%;min-height:130px;font-variant-numeric:tabular-nums;margin-top:10px;resize:vertical}
-.row-actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.entry{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,92px);gap:10px}
+.entry .input{font-size:21px;font-weight:650;padding:9px 12px;letter-spacing:.01em}
+.entry .pill-btn{grid-column:1/-1;margin-top:2px}
+.lookup{margin-top:12px;min-height:58px;border-radius:var(--r-md);padding:10px 12px;background:var(--surface-2);border:1px solid var(--line);font-size:14.5px;color:var(--muted);display:flex;flex-direction:column;justify-content:center;transition:background .2s,border-color .2s}
+.lookup .who{font-size:16px;font-weight:620;color:var(--ink)}
+.lookup.ok{background:var(--brand-soft);border-color:color-mix(in srgb,var(--brand) 35%,transparent);color:var(--ink)}
+.lookup.miss{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 35%,transparent);color:var(--ink)}
+.meter-row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-top:16px;font-size:14px;color:var(--muted)}
+.meter-row > span{min-width:0}
+.meter-row b{color:var(--ink);font-weight:650}
+.meter{height:8px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin-top:6px}
+.meter i{display:block;height:100%;background:var(--brand);border-radius:99px;transition:width .4s ease}
+.paste{border:1.5px solid color-mix(in srgb,var(--brand) 45%,transparent);background:var(--brand-soft);border-radius:var(--r-md);padding:12px}
+.paste.cue{animation:cue 2.2s ease 1}
+@keyframes cue{0%,100%{box-shadow:0 0 0 0 transparent}18%,52%{box-shadow:0 0 0 5px color-mix(in srgb,var(--brand) 26%,transparent)}}
+.paste-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px;line-height:1.45;margin-bottom:9px}
+.chip-hot{background:var(--brand);color:var(--brand-ink);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:650;white-space:nowrap}
+.paste textarea.input{background:var(--surface);border-color:color-mix(in srgb,var(--brand) 32%,transparent)}
+details.single{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+details.single summary{cursor:pointer;font-size:14.5px;font-weight:550;color:var(--brand)}
+details.single .entry{margin-top:10px}
+.dl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+textarea.input{min-height:118px;resize:vertical;font-variant-numeric:tabular-nums;font-size:15px}
+.bulk-actions{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.minor{font-size:13.5px}
+.minor.ok{color:var(--brand)} .minor.err{color:var(--accent)}
 
-.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-.search{flex:1 1 220px;max-width:340px;font-size:16px}
+.notes{display:grid;gap:10px;align-content:start}
+.notes:empty{display:none}
+.note{display:grid;grid-template-columns:22px minmax(0,1fr);overflow-wrap:anywhere;gap:8px;padding:11px 13px;border-radius:var(--r-md);background:var(--warn-soft);font-size:14px;line-height:1.5;border:1px solid color-mix(in srgb,var(--warn) 25%,transparent)}
+.note.info{background:var(--brand-soft);border-color:color-mix(in srgb,var(--brand) 25%,transparent)}
+.note svg{width:18px;height:18px;margin-top:2px;color:var(--warn)}
+.note.info svg{color:var(--brand)}
+.note b{font-weight:620}
+
+/* ---------- results ---------- */
+.mainc{display:grid;gap:16px;min-width:0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{padding:14px 16px}
+.stat span{display:block;font-size:13.5px;color:var(--muted)}
+.stat strong{display:block;font-size:28px;font-weight:700;font-stretch:90%;line-height:1.2;font-variant-numeric:tabular-nums}
+.stat small{font-size:14px;color:var(--muted);font-weight:500}
+.results{overflow:hidden}
+.toolbar{display:flex;align-items:center;gap:10px;padding:14px 16px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.search{position:relative;flex:1 1 200px;max-width:300px}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+.search .input{padding-left:36px;border-radius:999px}
+.seg{display:flex;gap:4px;padding:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;flex-wrap:wrap}
+.seg button{border:none;background:transparent;border-radius:999px;padding:5px 12px;font-size:14px;cursor:pointer;color:var(--muted);white-space:nowrap}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button .c{font-size:12px;margin-left:4px;opacity:.75}
 .toolbar .spacer{flex:1}
-.status{font-size:15px;color:var(--muted);min-height:22px}
-.status.err{color:var(--bubble)}
-.status.ok{color:var(--pass)}
-.tablebox{overflow-x:auto;border:1px solid var(--rule);border-radius:4px;max-height:70vh;overflow-y:auto}
-table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:15.5px}
-th,td{padding:6px 8px;border-bottom:1px solid var(--rule);text-align:center;white-space:nowrap}
-th{position:sticky;top:0;background:var(--pass-soft);font-weight:600;z-index:1;font-size:14.5px}
-td.name{text-align:left;white-space:normal;min-width:170px}
-td.br{white-space:normal;max-width:130px;font-size:14.5px;color:var(--muted)}
-tbody tr:nth-child(even) td{background:var(--stripe)}
-tr.out td{opacity:.45}
-tr.out td.x{opacity:1}
-td.pos{font-weight:700}
-td.tot{font-weight:700;color:var(--pass)}
-td.neg{color:var(--bubble)}
-td.w input{width:62px;text-align:center;padding:3px 4px;border:1px solid var(--rule);border-radius:3px;background:var(--sheet);font-size:15.5px;font-weight:600}
-td.w input.has{border-color:var(--pass);background:var(--pass-soft)}
-.flag{display:inline-block;font-size:12.5px;padding:0 6px;border-radius:3px;background:var(--warn-soft);color:var(--warn);margin-left:6px;white-space:nowrap;vertical-align:1px}
-.empty{padding:26px;text-align:center;color:var(--muted)}
-@media (max-width:640px){
-  .wrap{padding:18px 12px 60px}
-  section.step{grid-template-columns:1fr}
-  .step-mark{border-right:none;border-bottom:1px dashed var(--rule);justify-content:flex-start;padding:14px 16px 0}
-  .step-body{padding:12px 16px 18px}
-  .fields{grid-template-columns:1fr}
-  .qe{grid-template-columns:1fr 1fr}
-  .qe .btn{grid-column:1/-1}
-  .bubbles-deco{display:none}
+.tablebox{overflow:auto;max-height:68vh}
+table{border-collapse:separate;border-spacing:0;width:100%;font-variant-numeric:tabular-nums;font-size:15px}
+th,td{padding:9px 8px;text-align:center;white-space:nowrap;border-bottom:1px solid var(--line)}
+thead th{position:sticky;top:0;background:var(--surface);z-index:2;font-size:13px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--line)}
+th.l,td.l{text-align:left}
+tbody tr{transition:background .15s}
+tbody tr:hover td{background:var(--surface-2)}
+td.name{white-space:normal;min-width:150px}
+td.name .nm{font-weight:560}
+td.name .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+td.br{white-space:normal;max-width:110px;color:var(--muted);font-size:14px}
+.rank{display:inline-grid;place-items:center;min-width:46px;padding:3px 8px;border-radius:999px;font-weight:650;font-size:14px;background:var(--surface-2)}
+.rank.r1{background:var(--gold);color:var(--gold-ink)}
+.rank.r2{background:var(--silver);color:var(--silver-ink)}
+.rank.r3{background:var(--bronze);color:var(--bronze-ink)}
+td.neg{color:var(--accent)}
+td.acw{color:var(--muted)} td.acw i{font-style:normal;opacity:.45;margin:0 5px} td.acw .c{color:var(--brand);font-weight:600} td.acw .w{color:var(--accent)} td.acw span:first-child{color:var(--ink)}
+td.mcq{font-weight:560}
+td.tot{font-weight:750;font-size:16.5px;color:var(--brand)}
+.w-in{width:64px;text-align:center;padding:5px 4px;border:1px dashed var(--line);border-radius:8px;background:transparent;font-size:15px;font-weight:620;transition:all .15s}
+.w-in:hover{border-color:var(--muted)}
+.w-in:focus{outline:none;border-style:solid;border-color:var(--brand);background:var(--surface);box-shadow:0 0 0 3px color-mix(in srgb,var(--brand) 22%,transparent)}
+.w-in.has{border-style:solid;border-color:transparent;background:var(--brand-soft);color:var(--ink)}
+.tag{font-size:12px;padding:1px 8px;border-radius:99px;background:var(--warn-soft);color:var(--warn);white-space:nowrap}
+tr.out td{opacity:.5} tr.out td.x{opacity:1}
+tr.flash td{animation:flash 1.6s ease}
+@keyframes flash{0%,40%{background:var(--brand-soft)}100%{background:transparent}}
+td.x input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+.empty{padding:40px 20px;text-align:center;color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:var(--surface);padding:11px 18px;border-radius:999px;font-size:15px;box-shadow:0 12px 30px -10px rgba(0,0,0,.4);transition:all .25s;z-index:50;max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.err{background:var(--accent);color:#fff}
+
+@media (max-width:1180px){
+  .work{grid-template-columns:1fr}
+  .side{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:720px){
+  .band-inner{padding:18px 16px 80px}
+  .band.compact .band-inner{padding-bottom:18px}
+  .wrap{padding:0 12px 48px}
+  .progress li{padding:4px 8px 4px 4px;font-size:13px}
+  .progress li .t{display:none}
+  .progress li.active .t{display:inline}
+  .howto{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .toolbar .spacer{display:none}
+  .search{max-width:none}
+  .toolbar .dl{width:100%}
+  .toolbar .dl > *{flex:1 1 100%}
+  .drop{padding:40px 18px 34px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <div>
-      <h1>রেজাল্ট শিট মেকার</h1>
-      <p class="lede">Google Form থেকে ডাউনলোড করা উত্তরের ফাইল দিন, লিখিত অংশের নম্বর রোল ধরে বসান, তারপর ছাত্রদের দেওয়ার মতো সাজানো Excel রেজাল্ট নামিয়ে নিন।</p>
-    </div>
-    <div class="bubbles-deco" aria-hidden="true"><span>ক</span><span class="on">খ</span><span>গ</span><span>ঘ</span></div>
-  </header>
-
-  <section class="step" id="step1">
-    <div class="step-mark"><div class="bubble">১</div></div>
-    <div class="step-body">
-      <h2>উত্তরের ফাইল দিন</h2>
-      <p class="hint">Google Form-এর Responses (.xlsx) ফাইল। আগে বানানো রেজাল্ট ফাইলও দিতে পারেন, লিখিত নম্বর আপডেট করার জন্য।</p>
-      <div id="dropArea">
-        <label class="drop" id="drop">
-          <input type="file" id="file" accept=".xlsx">
-          <strong>ফাইল বেছে নিন বা এখানে টেনে আনুন</strong>
-          <small>শুধু .xlsx ফাইল। ফাইলটি আপনার ব্রাউজারেই পড়া হয়, কোথাও পাঠানো হয় না।</small>
-        </label>
+<header class="band" id="band">
+  <div class="band-inner">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="3" width="20" height="22" rx="3" stroke="currentColor" stroke-width="2" style="color:var(--brand-ink)"/><circle cx="10" cy="10" r="2" fill="currentColor" style="color:var(--brand-ink)"/><circle cx="16" cy="10" r="2" stroke="currentColor" stroke-width="1.5" style="color:var(--brand-ink)"/><circle cx="10" cy="16" r="2" stroke="currentColor" stroke-width="1.5" style="color:var(--brand-ink)"/><circle cx="16" cy="16" r="2" fill="currentColor" style="color:var(--brand-ink)"/><path d="M9 21h10" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--brand-ink)"/></svg>
       </div>
-      <div id="loaded" hidden>
-        <div class="filebar">
-          <span class="fname" id="fname"></span>
-          <span class="chip" id="chipStudents"></span>
-          <span class="chip" id="chipQs"></span>
-          <button class="linkbtn" id="changeFile" type="button">অন্য ফাইল দিন</button>
+      <div>
+        <h1>রেজাল্ট শিট মেকার</h1>
+        <p>Google Form-এর উত্তর থেকে সাজানো Excel রেজাল্ট</p>
+      </div>
+    </div>
+    <ol class="progress" aria-label="ধাপ">
+      <li id="p1" class="active"><span class="b">১</span><span class="t">ফাইল</span></li>
+      <li id="p2"><span class="b">২</span><span class="t">লিখিত নম্বর</span></li>
+      <li id="p3"><span class="b">৩</span><span class="t">ডাউনলোড</span></li>
+    </ol>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- empty state -->
+  <section class="intro" id="intro">
+    <label class="card drop" id="drop">
+      <input type="file" id="file" accept=".xlsx">
+      <div class="sheet-ico" aria-hidden="true">
+        <svg viewBox="0 0 50 50" fill="none"><rect x="9" y="5" width="32" height="40" rx="5" fill="var(--surface)" stroke="var(--brand)" stroke-width="2.5"/><g stroke="var(--brand)" stroke-width="2"><circle cx="18" cy="16" r="3" fill="var(--brand)"/><circle cx="26" cy="16" r="3"/><circle cx="34" cy="16" r="3"/><circle cx="18" cy="25" r="3"/><circle cx="26" cy="25" r="3" fill="var(--brand)"/><circle cx="34" cy="25" r="3"/></g><path d="M17 35h16" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div>
+      <h2>Google Form-এর Responses ফাইলটি দিন</h2>
+      <p>ফাইলটি এখানে টেনে আনুন, অথবা নিচের বোতাম চেপে বেছে নিন। আগে বানানো রেজাল্ট ফাইল দিলে লিখিত নম্বর আপডেট করা যাবে।</p>
+      <span class="pill-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M6 10l6-6 6 6"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+        .xlsx ফাইল বেছে নিন
+      </span>
+      <span class="err" id="dropErr" aria-live="polite"></span>
+      <small><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>ফাইলটি আপনার ব্রাউজারেই পড়া হয়, কোথাও পাঠানো হয় না</small>
+    </label>
+    <ol class="howto">
+      <li><b>ফাইল দিন</b>নাম, রোল, শাখা আর MCQ প্রশ্ন নিজে থেকেই চিনে নেবে।</li>
+      <li><b>লিখিত নম্বর বসান</b>Excel থেকে রোল ও নম্বরের দুই কলাম একসাথে পেস্ট করুন, বা একটা একটা করে লিখুন।</li>
+      <li><b>ফাইল নামান</b>ছাত্রদের দেওয়ার Excel রেজাল্ট, আর ওয়েবসাইটে দেওয়ার CSV।</li>
+    </ol>
+  </section>
+
+  <!-- workspace -->
+  <div class="work" id="work" hidden>
+    <aside class="side">
+      <section class="card panel">
+        <div class="panel-head"><h3><span class="n">১</span>ফাইল ও সেটিংস</h3></div>
+        <div class="filebox">
+          <div class="fi">XLSX</div>
+          <div class="meta"><div class="fname" id="fname"></div><div class="sub" id="fsub"></div></div>
+          <button class="btn ghost" id="changeFile" type="button">বদলান</button>
         </div>
-        <div class="fields">
-          <label class="f">রেজাল্টের শিরোনাম
-            <input id="title" type="text" autocomplete="off">
-          </label>
-          <label class="f">প্রতি ভুলে নেগেটিভ নম্বর
-            <input id="negative" type="text" inputmode="decimal" autocomplete="off">
-          </label>
+        <div class="grid2">
+          <label class="field"><span>রেজাল্টের শিরোনাম</span><input class="input" id="title" type="text" autocomplete="off"></label>
+          <label class="field"><span>প্রতি ভুলে কাটা</span><input class="input num" id="negative" type="text" inputmode="decimal" autocomplete="off"></label>
         </div>
-        <details id="qDetails">
-          <summary id="qSummary">MCQ প্রশ্নের কলাম</summary>
-          <p class="hint" style="margin:6px 0 0">টিক দেওয়া কলামগুলো "Total Ans" গণনায় ধরা হবে। লিখিত প্রশ্নের কলাম নিজে থেকেই বাদ রাখা হয়েছে।</p>
+        <label class="opt" id="orphanRow" hidden>
+          <input type="checkbox" id="orphanChk">
+          <span>MCQ দেয়নি, শুধু লিখিত নম্বর আছে — এমন <b id="orphanN">0</b> জনকেও রেজাল্টে রাখুন</span>
+        </label>
+        <details class="qs">
+          <summary><span id="qSummary">MCQ প্রশ্ন</span></summary>
           <div class="qlist" id="qlist"></div>
         </details>
-        <div class="notes" id="notes"></div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <section class="step locked" id="step2">
-    <div class="step-mark"><div class="bubble">২</div></div>
-    <div class="step-body">
-      <h2>লিখিত অংশের নম্বর</h2>
-      <p class="hint">রোল লিখে Enter, নম্বর লিখে Enter। নম্বরগুলো এই ব্রাউজারে শিরোনাম অনুযায়ী মনে রাখা হয়, পরে এসে বাকিগুলো যোগ করতে পারবেন।</p>
-      <div class="qe">
-        <label>রোল<input id="qRoll" type="text" inputmode="numeric" autocomplete="off"></label>
-        <label>নম্বর<input id="qMark" type="text" inputmode="decimal" autocomplete="off"></label>
-        <button class="btn" id="qAdd" type="button">নম্বর বসান</button>
-      </div>
-      <div class="lookup" id="lookup" aria-live="polite"></div>
-      <div class="markstats" id="markstats"></div>
-      <details id="bulk">
-        <summary>একসাথে অনেকগুলো পেস্ট করুন</summary>
-        <p class="hint" style="margin:6px 0 0">প্রতি লাইনে একটি রোল ও তার নম্বর, যেমন <b>6012522 8</b>। Excel থেকে দুই কলাম কপি করে সরাসরি পেস্ট করা যাবে। বাংলা সংখ্যাও চলবে।</p>
-        <textarea id="bulkText" spellcheck="false" placeholder="6012522	8&#10;6012520	7"></textarea>
-        <div class="row-actions">
-          <button class="btn" id="bulkAdd" type="button">সবগুলো বসান</button>
-          <span class="status" id="bulkStatus"></span>
+      <section class="card panel">
+        <div class="panel-head"><h3><span class="n">২</span>লিখিত অংশের নম্বর</h3></div>
+        <div class="paste" id="paste">
+          <div class="paste-top"><span class="chip-hot">দ্রুততম উপায়</span><span>Excel থেকে রোল ও নম্বরের দুই কলাম কপি করে এখানে পেস্ট করুন</span></div>
+          <textarea class="input" id="bulkText" spellcheck="false" placeholder="6012522&#9;8&#10;6012520&#9;7&#10;6012525&#9;6.5"></textarea>
+          <div class="bulk-actions">
+            <button class="pill-btn" id="bulkAdd" type="button">সবগুলো বসান</button>
+            <span class="minor" id="bulkStatus"></span>
+          </div>
         </div>
-      </details>
-    </div>
-  </section>
+        <div class="meter-row"><span id="meterText"></span><button class="btn ghost danger minor" id="clearMarks" type="button">সব মুছুন</button></div>
+        <div class="meter"><i id="meterBar" style="width:0"></i></div>
+        <details class="single">
+          <summary>একটা একটা করে বসান</summary>
+          <div class="entry">
+            <label class="field"><span>রোল</span><input class="input num" id="qRoll" type="text" inputmode="numeric" autocomplete="off" placeholder="6012522"></label>
+            <label class="field"><span>নম্বর</span><input class="input num" id="qMark" type="text" inputmode="decimal" autocomplete="off" placeholder="8"></label>
+            <button class="pill-btn" id="qAdd" type="button">নম্বর বসান</button>
+          </div>
+          <div class="lookup" id="lookup" aria-live="polite">রোল লিখলে এখানে ছাত্রের নাম দেখাবে</div>
+        </details>
+      </section>
 
-  <section class="step locked" id="step3">
-    <div class="step-mark"><div class="bubble">৩</div></div>
-    <div class="step-body">
-      <h2>রেজাল্ট দেখে ডাউনলোড করুন</h2>
-      <p class="hint">মোট নম্বর অনুযায়ী সাজানো। সমান হলে MCQ বেশি যার সে আগে, তারপর যে আগে জমা দিয়েছে। টেবিলেও লিখিত নম্বর বদলানো যায়।</p>
-      <div class="toolbar">
-        <input class="search" id="search" type="search" placeholder="নাম বা রোল খুঁজুন">
-        <span class="spacer"></span>
-        <button class="btn primary" id="download" type="button">Excel ফাইল ডাউনলোড</button>
+      <div class="notes" id="notes"></div>
+    </aside>
+
+    <section class="mainc">
+      <div class="stats">
+        <div class="card stat"><span>রেজাল্টে আছে</span><strong id="stN">0</strong></div>
+        <div class="card stat"><span>সর্বোচ্চ মোট</span><strong id="stMax">0</strong></div>
+        <div class="card stat"><span>গড় মোট</span><strong id="stAvg">0</strong></div>
+        <div class="card stat"><span>লিখিত বাকি</span><strong id="stLeft">0</strong></div>
       </div>
-      <div class="status" id="dlStatus" aria-live="polite"></div>
-      <div class="tablebox"><table>
-        <thead><tr>
-          <th title="রেজাল্ট থেকে বাদ দিন">বাদ</th><th>Position</th><th>Student Name</th><th>Roll</th><th>Branch</th>
-          <th>Total Ans</th><th>Correct</th><th>Wrong</th><th>Negative</th><th>MCQ</th><th>Written</th><th>Total</th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table></div>
-    </div>
-  </section>
-</div>
+      <div class="card results">
+        <div class="toolbar">
+          <div class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="input" id="search" type="search" placeholder="নাম বা রোল খুঁজুন">
+          </div>
+          <div class="seg" id="seg" role="group" aria-label="ফিল্টার">
+            <button type="button" data-f="all" aria-pressed="true">সবাই<span class="c" id="cAll"></span></button>
+            <button type="button" data-f="left" aria-pressed="false">লিখিত বাকি<span class="c" id="cLeft"></span></button>
+            <button type="button" data-f="issue" aria-pressed="false">সমস্যা<span class="c" id="cIssue"></span></button>
+          </div>
+          <span class="spacer"></span>
+          <div class="dl">
+            <button class="pill-btn" id="download" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 10l6 6 6-6"/><path d="M4 18v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/></svg>
+              Excel ডাউনলোড
+            </button>
+            <button class="btn" id="downloadCsv" type="button" title="ওয়েবসাইটে দেওয়ার জন্য CSV ফাইল">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a2 2 0 0 1 2-2h8l6 6v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/><path d="M14 3v6h6"/><path d="M3 12h9"/><path d="m9 9 3 3-3 3"/></svg>
+              ওয়েবসাইটের CSV
+            </button>
+          </div>
+        </div>
+        <div class="tablebox">
+          <table>
+            <thead><tr>
+              <th title="রেজাল্ট থেকে বাদ দিন">বাদ</th><th>Position</th><th class="l">Student Name</th><th>Roll</th><th class="l">Branch</th>
+              <th title="Total Ans · Correct · Wrong">উত্তর · সঠিক · ভুল</th><th>Negative</th><th>MCQ</th><th>Written</th><th>Total</th>
+            </tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /*! ExcelJS 19-10-2023 */
@@ -464,11 +619,20 @@ https://github.com/nodeca/pako/blob/main/LICENSE
       if (!/[A-Za-z\u0980-\u09FF]/.test(s.name)) flags.push('badname');
       return { s, totalAns, correct, wrong, neg, mcq, written, hasWritten, total: round2(mcq + written), flags };
     });
+    const rolls = new Set(state.students.map((s) => rollKey(s.roll)));
+    const orphanMarks = [...marks.keys()].filter((k) => k && !rolls.has(k));
+    if (state.includeOrphans) {
+      orphanMarks.forEach((k, i) => {
+        const written = marks.get(k);
+        const s = { id: 'orphan:' + k, order: 1e12 + i, score: 0, name: '', mobile: null,
+          roll: /^\d{1,15}$/.test(k) ? Number(k) : k, batch: null, branch: null,
+          answers: state.questions.map(() => null), orphan: true };
+        rows.push({ s, totalAns: 0, correct: 0, wrong: 0, neg: 0, mcq: 0, written, hasWritten: true, total: round2(written), flags: ['nomcq'] });
+      });
+    }
     const included = rows.filter((r) => !state.excluded.has(r.s.id));
     included.sort((a, b) => b.total - a.total || b.mcq - a.mcq || a.s.order - b.s.order);
     included.forEach((r, i) => { r.position = i + 1; });
-    const rolls = new Set(state.students.map((s) => rollKey(s.roll)));
-    const orphanMarks = [...marks.keys()].filter((k) => !rolls.has(k));
     return { rows, included, orphanMarks };
   }
 
@@ -567,7 +731,19 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     return wb;
   }
 
-  const api = { parseWorkbook, compute, buildWorkbook, rollKey, toLatinDigits, toNum, ordinal, round2 };
+  const WEB_HEADERS = ['Student Name', 'Roll', 'Total Ans', 'Correct Ans', 'Wrong Ans', 'Negative Mark', 'MCQ', 'Written', 'Position'];
+  function buildWebCsv(state) {
+    const { included } = compute(state);
+    const cell = (v) => {
+      const t = v === null || v === undefined ? '' : String(v);
+      return /[",\r\n]/.test(t) ? '"' + t.replace(/"/g, '""') + '"' : t;
+    };
+    const lines = [WEB_HEADERS.join(',')];
+    included.forEach((r) => lines.push([r.s.name, r.s.roll, r.totalAns, r.correct, r.wrong, r.neg, r.mcq, r.written, ordinal(r.position)].map(cell).join(',')));
+    return '\ufeff' + lines.join('\r\n') + '\r\n';
+  }
+
+  const api = { parseWorkbook, compute, buildWorkbook, buildWebCsv, WEB_HEADERS, rollKey, toLatinDigits, toNum, ordinal, round2 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.RS = api;
 })(typeof window !== 'undefined' ? window : globalThis);
 
@@ -577,22 +753,39 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt = (n) => (Math.round(n * 100) / 100).toString();
-  let S = null;
+  const ICON_WARN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg>';
+  const ICON_INFO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>';
+  let S = null, filter = 'all', flashId = null, toastT = null;
 
   const store = {
-    key: (title) => 'rsm-marks:' + String(title || '').trim().toLowerCase(),
-    get(title){ try { const v = localStorage.getItem(this.key(title)); return v ? JSON.parse(v) : null; } catch(e){ return null; } },
-    set(title, marks){ try { localStorage.setItem(this.key(title), JSON.stringify([...marks.entries()])); } catch(e){} },
-    del(title){ try { localStorage.removeItem(this.key(title)); } catch(e){} },
+    key: (t) => 'rsm-marks:' + String(t || '').trim().toLowerCase(),
+    get(t){ try { const v = localStorage.getItem(this.key(t)); return v ? JSON.parse(v) : null; } catch(e){ return null; } },
+    set(t, m){ try { localStorage.setItem(this.key(t), JSON.stringify([...m.entries()])); } catch(e){} },
+    del(t){ try { localStorage.removeItem(this.key(t)); } catch(e){} },
   };
-
+  function toast(msg, err){
+    const t = $('toast'); t.textContent = msg; t.className = 'toast show' + (err ? ' err' : '');
+    clearTimeout(toastT); toastT = setTimeout(() => { t.className = 'toast' + (err ? ' err' : ''); }, 3200);
+  }
   function titleFromFile(name){
     let t = name.replace(/\.xlsx$/i, '').replace(/[\s_]*\(?\s*Responses\s*\)?[\s_]*$/i, '').replace(/_/g, ' ').trim();
     if (!/result/i.test(t)) t += ' Result';
     return t;
   }
+  function setProgress(){
+    const hasFile = !!S;
+    const withW = hasFile ? RS.compute(S).included.filter((r) => r.hasWritten).length : 0;
+    const p = [$('p1'), $('p2'), $('p3')];
+    p.forEach((li) => li.classList.remove('active', 'done'));
+    if (!hasFile){ p[0].classList.add('active'); return; }
+    p[0].classList.add('done');
+    if (withW) p[1].classList.add('done');
+    if (S.downloaded) p[2].classList.add('done');
+    const next = p.find((li) => !li.classList.contains('done'));
+    if (next) next.classList.add('active');
+  }
 
-  // ---------- step 1: file ----------
+  // ---------- file ----------
   const drop = $('drop'), fileInput = $('file');
   fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); });
   ['dragenter','dragover'].forEach((e) => drop.addEventListener(e, (ev) => { ev.preventDefault(); drop.classList.add('over'); }));
@@ -601,40 +794,39 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   $('changeFile').addEventListener('click', () => { fileInput.value = ''; fileInput.click(); });
 
   async function loadFile(file){
-    const strong = drop.querySelector('strong');
-    if (!window.ExcelJS){ strong.textContent = 'Excel পড়ার লাইব্রেরি লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।'; return; }
-    if (!/\.xlsx$/i.test(file.name)){ strong.textContent = 'এটা .xlsx ফাইল নয়। Google Form থেকে Microsoft Excel (.xlsx) হিসেবে ডাউনলোড করে দিন।'; return; }
-    strong.textContent = 'ফাইল পড়া হচ্ছে…';
+    const fail = (msg) => { if (S) toast(msg, true); else $('dropErr').textContent = msg; };
+    $('dropErr').textContent = '';
+    if (!window.ExcelJS) return fail('Excel পড়ার লাইব্রেরি লোড হয়নি। ইন্টারনেট সংযোগ দেখে পেজটি আবার খুলুন।');
+    if (!/\.xlsx$/i.test(file.name)) return fail('এটা .xlsx ফাইল নয়। Google Form থেকে Microsoft Excel (.xlsx) হিসেবে ডাউনলোড করে দিন।');
     let p;
     try { p = await RS.parseWorkbook(ExcelJS, await file.arrayBuffer()); }
     catch(e){
-      strong.textContent = e.message === 'noheader'
+      return fail(e.message === 'noheader'
         ? 'ফাইলে "Roll" ও "Name" কলাম পাওয়া যায়নি। Google Form-এর Responses ফাইলটিই দিন।'
-        : 'ফাইলটি পড়া যায়নি। ফাইলটি Excel-এ খুলে আবার .xlsx হিসেবে সেভ করে চেষ্টা করুন।';
-      return;
+        : 'ফাইলটি পড়া যায়নি। Excel-এ খুলে আবার .xlsx হিসেবে সেভ করে চেষ্টা করুন।');
     }
-    if (!p.students.length){ strong.textContent = 'ফাইলে কোনো উত্তর পাওয়া যায়নি।'; return; }
-    strong.textContent = 'ফাইল বেছে নিন বা এখানে টেনে আনুন';
+    if (!p.students.length) return fail('ফাইলে কোনো উত্তর পাওয়া যায়নি।');
 
     const title = p.title || titleFromFile(file.name);
-    const marks = new Map();
+    const marks = new Map(); let restored = 0;
     const saved = store.get(title);
-    let restored = 0;
     if (saved) saved.forEach(([k, v]) => { marks.set(k, v); restored++; });
     p.marks.forEach(([k, v]) => marks.set(k, v));
     S = { fileName: file.name, kind: p.kind, title, negative: p.negative ?? 0.25, questions: p.questions, students: p.students,
-          marks, excluded: new Set(), restored, missing: p.missing };
+          marks, excluded: new Set(), restored, missing: p.missing, includeOrphans: false, downloaded: false };
     RS.compute(S).rows.forEach((r) => { if (r.flags.includes('badname') || r.flags.includes('noroll')) S.excluded.add(r.s.id); });
     store.set(S.title, S.marks);
 
-    $('dropArea').hidden = true; $('loaded').hidden = false;
-    $('fname').textContent = file.name;
-    $('title').value = S.title;
-    $('negative').value = S.negative;
-    ['step2','step3'].forEach((id) => $(id).classList.remove('locked'));
-    $('step1').classList.add('done');
+    $('intro').hidden = true; $('work').hidden = false; $('band').classList.add('compact');
+    $('fname').textContent = file.name; $('fname').title = file.name;
+    $('fsub').textContent = p.kind === 'result' ? 'আগের রেজাল্ট ফাইল' : 'Google Form Responses';
+    $('title').value = S.title; $('negative').value = S.negative;
+    filter = 'all'; $('search').value = ''; $('orphanChk').checked = false; $('bulkStatus').textContent = '';
     renderQuestions(); renderAll();
-    $('qRoll').focus({ preventScroll: true });
+    toast(`${S.students.length}টি উত্তর পড়া হয়েছে`);
+    const paste = $('paste');
+    paste.classList.remove('cue'); void paste.offsetWidth; paste.classList.add('cue');
+    $('bulkText').focus({ preventScroll: true });
   }
 
   $('title').addEventListener('input', (e) => { if (!S) return; S.title = e.target.value; store.set(S.title, S.marks); });
@@ -644,33 +836,35 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     if (!isNaN(v) && v >= 0){ S.negative = v; renderAll(); }
   });
 
+  $('orphanChk').addEventListener('change', (e) => { if (!S) return; S.includeOrphans = e.target.checked; renderAll(); });
+
   function renderQuestions(){
     const inc = S.questions.filter((q) => q.include).length;
-    $('qSummary').textContent = `MCQ প্রশ্নের কলাম: ${inc}টি গণনায় (${S.questions.length}টির মধ্যে)`;
+    $('qSummary').textContent = `MCQ প্রশ্ন: ${inc}টি গণনায় (মোট ${S.questions.length}টি কলাম)`;
     $('qlist').innerHTML = S.questions.map((q, i) =>
-      `<label><input type="checkbox" data-q="${i}" ${q.include ? 'checked' : ''}><span class="qh">${esc(q.header)}</span><small>${q.filled} জন উত্তর দিয়েছে</small></label>`).join('');
+      `<label><input type="checkbox" data-q="${i}" ${q.include ? 'checked' : ''}><span><span class="qh">${esc(q.header)}</span><small>${q.filled} জন উত্তর দিয়েছে</small></span></label>`).join('');
   }
   $('qlist').addEventListener('change', (e) => {
     const i = e.target.dataset.q; if (i === undefined) return;
     S.questions[+i].include = e.target.checked; renderQuestions(); renderAll();
   });
 
-  // ---------- step 2: marks ----------
-  function studentsByRoll(k){ return S.students.filter((s) => RS.rollKey(s.roll) === k); }
-  function parseMark(v){
-    const t = RS.toLatinDigits(String(v)).trim();
-    if (!/^\d+(\.\d+)?$/.test(t)) return null;
-    return parseFloat(t);
-  }
+  // ---------- marks ----------
+  const studentsByRoll = (k) => S.students.filter((s) => RS.rollKey(s.roll) === k);
+  function parseMark(v){ const t = RS.toLatinDigits(String(v)).trim(); return /^\d+(\.\d+)?$/.test(t) ? parseFloat(t) : null; }
+  function setLookup(html, cls){ const el = $('lookup'); el.innerHTML = html; el.className = 'lookup' + (cls ? ' ' + cls : ''); }
   function showLookup(){
+    if (!S) return;
     const k = RS.rollKey($('qRoll').value);
-    const el = $('lookup');
-    if (!k){ el.innerHTML = ''; return; }
+    if (!k){ setLookup('রোল লিখলে এখানে ছাত্রের নাম দেখাবে'); return; }
     const ss = studentsByRoll(k);
-    const prev = S.marks.has(k) ? ` · এখন লিখিত নম্বর <b>${fmt(S.marks.get(k))}</b>` : '';
-    el.innerHTML = ss.length
-      ? `<span class="who">${esc(ss.map((s) => s.name).join(', '))}</span>${prev}`
-      : `<span class="miss">এই রোলে কোনো MCQ উত্তর জমা পড়েনি। নম্বর বসালে তালিকায় থাকবে, কিন্তু রেজাল্টে আসবে না।</span>${prev}`;
+    const cur = S.marks.has(k) ? `এখন লিখিত ${fmt(S.marks.get(k))}` : 'লিখিত নম্বর এখনো বসানো হয়নি';
+    if (ss.length){
+      const r = RS.compute(S).rows.find((x) => x.s.id === ss[0].id);
+      setLookup(`<span class="who">${esc(ss.map((s) => s.name).join(', '))}</span><span>MCQ ${fmt(r.mcq)} · ${cur}</span>`, 'ok');
+    } else {
+      setLookup(`<span class="who">এই রোলে MCQ উত্তর জমা পড়েনি</span><span>নম্বর বসালে তালিকায় থাকবে, রেজাল্টে আসবে না</span>`, 'miss');
+    }
   }
   $('qRoll').addEventListener('input', showLookup);
   $('qRoll').addEventListener('keydown', (e) => { if (e.key === 'Enter'){ e.preventDefault(); if (RS.rollKey($('qRoll').value)) $('qMark').focus(); } });
@@ -680,24 +874,29 @@ https://github.com/nodeca/pako/blob/main/LICENSE
   function addQuick(){
     const k = RS.rollKey($('qRoll').value);
     const raw = $('qMark').value.trim();
-    const el = $('lookup');
-    if (!k){ el.innerHTML = '<span class="miss">আগে রোল লিখুন।</span>'; $('qRoll').focus(); return; }
+    if (!k){ setLookup('<span class="who">আগে রোল লিখুন</span>', 'miss'); $('qRoll').focus(); return; }
     if (raw === ''){
-      if (S.marks.has(k)){ S.marks.delete(k); saveMarks(); el.innerHTML = `<span class="ok">রোল ${esc(k)}-এর লিখিত নম্বর মুছে ফেলা হলো।</span>`; resetQuick(); }
-      else { el.innerHTML = '<span class="miss">নম্বর লিখুন।</span>'; $('qMark').focus(); }
+      if (S.marks.has(k)){ S.marks.delete(k); saveMarks(); toast(`রোল ${k}-এর লিখিত নম্বর মুছে ফেলা হলো`); resetQuick(); }
+      else { setLookup('<span class="who">নম্বর লিখুন</span>', 'miss'); $('qMark').focus(); }
       return;
     }
     const m = parseMark(raw);
-    if (m === null){ el.innerHTML = '<span class="miss">নম্বর হিসেবে শুধু সংখ্যা লিখুন, যেমন 7 বা 6.5।</span>'; $('qMark').select(); return; }
+    if (m === null){ setLookup('<span class="who">শুধু সংখ্যা লিখুন</span><span>যেমন 7 বা 6.5</span>', 'miss'); $('qMark').select(); return; }
     const had = S.marks.has(k) ? S.marks.get(k) : null;
     S.marks.set(k, m); saveMarks();
     const ss = studentsByRoll(k);
-    const who = ss.length ? esc(ss.map((s) => s.name).join(', ')) : `রোল ${esc(k)}`;
-    el.innerHTML = `<span class="ok">${who}: লিখিত ${fmt(m)} বসানো হলো${had !== null && had !== m ? ` (আগে ছিল ${fmt(had)})` : ''}।</span>`;
+    if (ss.length) flashId = ss[0].id;
+    toast(`${ss.length ? ss[0].name : 'রোল ' + k}: লিখিত ${fmt(m)}${had !== null && had !== m ? ` (আগে ছিল ${fmt(had)})` : ''}`);
     resetQuick();
   }
   function resetQuick(){ $('qRoll').value = ''; $('qMark').value = ''; $('qRoll').focus(); renderAll(); }
   function saveMarks(){ store.set(S.title, S.marks); }
+
+  $('clearMarks').addEventListener('click', () => {
+    if (!S || !S.marks.size) return;
+    if (!confirm(`${S.marks.size}টি লিখিত নম্বর মুছে ফেলবেন?`)) return;
+    S.marks.clear(); store.del(S.title); S.restored = 0; renderAll(); toast('সব লিখিত নম্বর মুছে ফেলা হলো');
+  });
 
   $('bulkAdd').addEventListener('click', () => {
     const lines = $('bulkText').value.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
@@ -711,61 +910,68 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     });
     saveMarks(); renderAll();
     const st = $('bulkStatus');
-    st.className = 'status ' + (bad.length ? 'err' : 'ok');
-    st.textContent = `${added}টি নম্বর বসানো হলো।` + (bad.length ? ` ${bad.length}টি লাইন বোঝা যায়নি: ${bad.slice(0, 3).join(' | ')}${bad.length > 3 ? ' …' : ''}` : '');
+    st.className = 'minor ' + (bad.length ? 'err' : 'ok');
+    st.textContent = `${added}টি বসানো হলো` + (bad.length ? `, ${bad.length}টি লাইন বোঝা যায়নি: ${bad.slice(0, 2).join(' | ')}${bad.length > 2 ? ' …' : ''}` : '');
     if (!bad.length) $('bulkText').value = '';
   });
 
-  // ---------- step 3: table ----------
+  // ---------- table ----------
   $('search').addEventListener('input', renderTable);
+  $('seg').addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    filter = b.dataset.f;
+    $('seg').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b ? 'true' : 'false'));
+    renderTable();
+  });
   $('tbody').addEventListener('change', (e) => {
     const t = e.target;
     if (t.dataset.ex){ t.checked ? S.excluded.add(t.dataset.ex) : S.excluded.delete(t.dataset.ex); renderAll(); return; }
     if (t.dataset.roll !== undefined){
       const k = t.dataset.roll; const raw = t.value.trim();
       if (raw === '') S.marks.delete(k);
-      else { const m = parseMark(raw); if (m === null){ t.value = S.marks.has(k) ? fmt(S.marks.get(k)) : ''; return; } S.marks.set(k, m); }
+      else { const m = parseMark(raw); if (m === null){ t.value = S.marks.has(k) ? fmt(S.marks.get(k)) : ''; toast('লিখিত নম্বরে শুধু সংখ্যা লিখুন', true); return; } S.marks.set(k, m); }
       saveMarks();
-      const nextId = document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.sid : null;
+      const a = document.activeElement;
+      const nextId = a && a.dataset ? a.dataset.sid : null;
+      flashId = t.dataset.sid;
       renderAll();
       if (nextId){ const n = document.querySelector(`input[data-sid="${nextId}"]`); if (n) n.focus({ preventScroll: true }); }
     }
   });
-  $('tbody').addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && e.target.dataset.roll !== undefined){ e.preventDefault(); e.target.blur(); }
-  });
+  $('tbody').addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.dataset.roll !== undefined){ e.preventDefault(); e.target.blur(); } });
 
-  const FLAG_TEXT = { dup: 'একই রোল একাধিকবার', badname: 'নাম ঠিক নেই', noroll: 'রোল নেই', badroll: 'রোল সংখ্যা নয়' };
+  const FLAG_TEXT = { dup: 'একই রোল একাধিকবার', badname: 'নাম ঠিক নেই', noroll: 'রোল নেই', badroll: 'রোল সংখ্যা নয়', nomcq: 'MCQ দেয়নি' };
 
-  function renderAll(){ renderNotes(); renderMarkStats(); renderTable(); showLookup(); }
+  function renderAll(){ const c = RS.compute(S); renderNotes(c); renderSide(c); renderTable(); showLookup(); setProgress(); }
 
-  function renderNotes(){
-    const { rows, orphanMarks } = RS.compute(S);
+  function renderNotes({ rows, orphanMarks }){
     const notes = [];
-    if (S.missing && S.missing.length) notes.push(`<b>${S.missing.map((m) => ({score:'Score', name:'Student Name', roll:'Roll'})[m]).join(', ')}</b> কলাম পাওয়া যায়নি, তাই হিসাব ভুল হতে পারে।`);
+    if (S.missing && S.missing.length) notes.push(['warn', `<b>${S.missing.map((m) => ({score:'Score', name:'Student Name', roll:'Roll'})[m]).join(', ')}</b> কলাম পাওয়া যায়নি, হিসাব ভুল হতে পারে।`]);
     const dups = [...new Set(rows.filter((r) => r.flags.includes('dup')).map((r) => RS.rollKey(r.s.roll)))];
-    if (dups.length) notes.push(`<b>${dups.length}টি রোল</b> একাধিকবার জমা পড়েছে (${dups.slice(0, 5).map(esc).join(', ')}${dups.length > 5 ? ' …' : ''})। টেবিলে "বাদ" টিক দিয়ে যেটা রাখবেন না সেটা সরিয়ে দিন।`);
+    if (dups.length) notes.push(['warn', `<b>${dups.length}টি রোল</b> একাধিকবার জমা পড়েছে (${dups.slice(0, 4).map(esc).join(', ')}${dups.length > 4 ? ' …' : ''})। টেবিলে "বাদ" টিক দিয়ে অতিরিক্তটা সরান।`]);
     const auto = rows.filter((r) => (r.flags.includes('badname') || r.flags.includes('noroll')) && S.excluded.has(r.s.id));
-    if (auto.length) notes.push(`নাম বা রোল না থাকা <b>${auto.length}টি উত্তর</b> রেজাল্ট থেকে বাদ রাখা হয়েছে (টেবিলের নিচে ধূসর)। রাখতে চাইলে "বাদ" টিক তুলে দিন।`);
-    if (S.restored) notes.push(`এই শিরোনামে আগে বসানো <b>${S.restored}টি লিখিত নম্বর</b> ফিরিয়ে আনা হয়েছে।`);
-    if (orphanMarks.length) notes.push(`<b>${orphanMarks.length}টি রোলের</b> লিখিত নম্বর আছে কিন্তু MCQ উত্তর জমা পড়েনি (${orphanMarks.slice(0, 5).map(esc).join(', ')}${orphanMarks.length > 5 ? ' …' : ''})। এরা রেজাল্টে আসবে না।`);
-    $('notes').innerHTML = notes.map((n) => `<div class="note">${n}</div>`).join('');
-    const { included } = RS.compute(S);
-    $('chipStudents').textContent = `${included.length} জন রেজাল্টে`;
-    $('chipQs').textContent = `${S.questions.filter((q) => q.include).length}টি MCQ`;
+    if (auto.length) notes.push(['warn', `নাম বা রোল না থাকা <b>${auto.length}টি উত্তর</b> বাদ রাখা হয়েছে। রাখতে চাইলে টেবিলে টিক তুলে দিন।`]);
+    if (orphanMarks.length) notes.push(['warn', `<b>${orphanMarks.length}টি রোলের</b> লিখিত নম্বর আছে কিন্তু MCQ জমা পড়েনি (${orphanMarks.slice(0, 4).map(esc).join(', ')}${orphanMarks.length > 4 ? ' …' : ''})। ${S.includeOrphans ? 'এরা ০ পেয়ে রেজাল্টে আছে।' : 'এদেরও রেজাল্টে রাখতে চাইলে উপরের টিকটি দিন।'}`]);
+    if (S.restored) notes.push(['info', `এই শিরোনামে আগে বসানো <b>${S.restored}টি লিখিত নম্বর</b> ফিরিয়ে আনা হয়েছে।`]);
+    $('notes').innerHTML = notes.map(([t, n]) => `<div class="note ${t === 'info' ? 'info' : ''}">${t === 'info' ? ICON_INFO : ICON_WARN}<div>${n}</div></div>`).join('');
   }
 
-  function renderMarkStats(){
-    const { included } = RS.compute(S);
+  function renderSide({ rows, included, orphanMarks }){
+    $('orphanRow').hidden = !orphanMarks.length;
+    $('orphanN').textContent = orphanMarks.length;
     const withW = included.filter((r) => r.hasWritten).length;
-    $('markstats').innerHTML = `<span>রেজাল্টের ${included.length} জনের মধ্যে <b>${withW}</b> জনের লিখিত নম্বর বসানো হয়েছে</span>` +
-      (S.marks.size ? `<button class="linkbtn" id="clearMarks" type="button">সব লিখিত নম্বর মুছুন</button>` : '');
-    $('step2').classList.toggle('done', withW > 0);
-    const c = $('clearMarks');
-    if (c) c.addEventListener('click', () => {
-      if (!confirm(`${S.marks.size}টি লিখিত নম্বর মুছে ফেলবেন?`)) return;
-      S.marks.clear(); store.del(S.title); S.restored = 0; renderAll();
-    });
+    const n = included.length;
+    $('meterText').innerHTML = `<b>${withW}</b> / ${n} জনের লিখিত বসানো হয়েছে`;
+    $('meterBar').style.width = (n ? Math.round(withW / n * 100) : 0) + '%';
+    $('clearMarks').hidden = !S.marks.size;
+    $('fsub').textContent = `${S.kind === 'result' ? 'আগের রেজাল্ট ফাইল' : 'Google Form Responses'} · ${S.students.length}টি উত্তর`;
+    $('stN').innerHTML = `${n}<small> জন</small>`;
+    $('stMax').textContent = n ? fmt(Math.max(...included.map((r) => r.total))) : '0';
+    $('stAvg').textContent = n ? fmt(included.reduce((a, r) => a + r.total, 0) / n) : '0';
+    $('stLeft').innerHTML = `${n - withW}<small> জন</small>`;
+    $('cAll').textContent = rows.length;
+    $('cLeft').textContent = n - withW;
+    $('cIssue').textContent = rows.filter((r) => r.flags.length || S.excluded.has(r.s.id)).length;
   }
 
   function renderTable(){
@@ -773,58 +979,83 @@ https://github.com/nodeca/pako/blob/main/LICENSE
     const { rows, included } = RS.compute(S);
     const q = RS.toLatinDigits($('search').value.trim().toLowerCase());
     const out = rows.filter((r) => S.excluded.has(r.s.id));
-    const list = [...included, ...out].filter((r) => !q || r.s.name.toLowerCase().includes(q) || String(r.s.roll).includes(q));
-    if (!list.length){ $('tbody').innerHTML = `<tr><td colspan="12" class="empty">"${esc(q)}" নামে বা রোলে কাউকে পাওয়া যায়নি।</td></tr>`; return; }
+    let list = [...included, ...out];
+    if (filter === 'left') list = list.filter((r) => !r.hasWritten && !S.excluded.has(r.s.id));
+    if (filter === 'issue') list = list.filter((r) => r.flags.length || S.excluded.has(r.s.id));
+    if (q) list = list.filter((r) => r.s.name.toLowerCase().includes(q) || String(r.s.roll).includes(q));
+    if (!list.length){
+      const msg = q ? `"${esc(q)}" নামে বা রোলে কাউকে পাওয়া যায়নি` : filter === 'left' ? 'সবার লিখিত নম্বর বসানো হয়ে গেছে' : filter === 'issue' ? 'কোনো সমস্যা পাওয়া যায়নি' : 'কেউ নেই';
+      $('tbody').innerHTML = `<tr><td colspan="10" class="empty">${msg}</td></tr>`; return;
+    }
     $('tbody').innerHTML = list.map((r) => {
       const ex = S.excluded.has(r.s.id); const k = RS.rollKey(r.s.roll);
-      const flags = r.flags.map((f) => `<span class="flag">${FLAG_TEXT[f]}</span>`).join('');
-      return `<tr class="${ex ? 'out' : ''}">
+      const tags = r.flags.length ? `<div class="tags">${r.flags.map((f) => `<span class="tag">${FLAG_TEXT[f]}</span>`).join('')}</div>` : '';
+      const rk = ex ? '<span class="rank">—</span>' : `<span class="rank ${r.position <= 3 ? 'r' + r.position : ''}">${RS.ordinal(r.position)}</span>`;
+      return `<tr class="${ex ? 'out' : ''}${r.s.id === flashId ? ' flash' : ''}" data-row="${r.s.id}">
         <td class="x"><input type="checkbox" data-ex="${r.s.id}" ${ex ? 'checked' : ''} aria-label="${esc(r.s.name)} বাদ দিন"></td>
-        <td class="pos">${ex ? '—' : RS.ordinal(r.position)}</td>
-        <td class="name">${esc(r.s.name) || '<i>নাম নেই</i>'}${flags}</td>
-        <td>${esc(r.s.roll)}</td><td class="br">${esc(r.s.branch)}</td>
-        <td>${r.totalAns}</td><td>${fmt(r.correct)}</td><td>${r.wrong}</td><td class="neg">${fmt(r.neg)}</td>
-        <td>${fmt(r.mcq)}</td>
-        <td class="w">${k ? `<input data-roll="${esc(k)}" data-sid="${r.s.id}" class="${r.hasWritten ? 'has' : ''}" value="${r.hasWritten ? fmt(r.written) : ''}" inputmode="decimal" aria-label="${esc(r.s.name)} লিখিত নম্বর">` : '—'}</td>
+        <td>${rk}</td>
+        <td class="l name"><span class="nm">${esc(r.s.name) || '<i>নাম নেই</i>'}</span>${tags}</td>
+        <td>${esc(r.s.roll)}</td><td class="l br">${esc(r.s.branch)}</td>
+        <td class="acw"><span>${r.totalAns}</span><i>·</i><span class="c">${fmt(r.correct)}</span><i>·</i><span class="w">${r.wrong}</span></td><td class="neg">${r.neg ? '−' + fmt(r.neg) : '0'}</td>
+        <td class="mcq">${fmt(r.mcq)}</td>
+        <td>${k ? `<input class="w-in ${r.hasWritten ? 'has' : ''}" data-roll="${esc(k)}" data-sid="${r.s.id}" value="${r.hasWritten ? fmt(r.written) : ''}" inputmode="decimal" placeholder="–" aria-label="${esc(r.s.name)} লিখিত নম্বর">` : '—'}</td>
         <td class="tot">${fmt(r.total)}</td></tr>`;
     }).join('');
+    if (flashId){
+      const tr = $('tbody').querySelector(`tr[data-row="${flashId}"]`);
+      if (tr){ const box = tr.closest('.tablebox'); const top = tr.offsetTop - box.clientHeight / 2; box.scrollTo({ top: Math.max(0, top), behavior: 'smooth' }); }
+      flashId = null;
+    }
   }
 
   // ---------- download ----------
-  $('download').addEventListener('click', async () => {
-    if (!S) return;
-    const st = $('dlStatus'); const btn = $('download');
-    const { included } = RS.compute(S);
-    if (!included.length){ st.className = 'status err'; st.textContent = 'রেজাল্টে কেউ নেই। অন্তত একজনের "বাদ" টিক তুলে দিন।'; return; }
-    btn.disabled = true; st.className = 'status'; st.textContent = 'ফাইল তৈরি হচ্ছে…';
-    try {
-      const wb = RS.buildWorkbook(ExcelJS, S);
-      const buf = await wb.xlsx.writeBuffer();
-      const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      const filename = (S.title || 'Result').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + '.xlsx';
-      const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : undefined;
-      if (dl){
-        try {
-          await dl.save({ filename, data: blob });
-          st.className = 'status ok'; st.textContent = `"${filename}" ডাউনলোড হয়েছে।`;
-        } catch(err){
-          const code = err && err.code;
-          st.className = 'status' + (code === 'declined' ? '' : ' err');
-          st.textContent = code === 'declined' ? 'ডাউনলোড বাতিল করা হয়েছে।'
-            : code === 'rate_limited' ? 'একটি ডাউনলোড অনুরোধ এখনো খোলা আছে। সেটা শেষ করে আবার চাপুন।'
-            : 'এখান থেকে ফাইল ডাউনলোড করা যাচ্ছে না।';
-        }
-      } else if (dl === null){
-        st.className = 'status err'; st.textContent = 'এই ভিউতে ডাউনলোড চালু নেই। পেজটি claude.ai-তে খুলে চেষ্টা করুন।';
-      } else {
-        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
-        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-        st.className = 'status ok'; st.textContent = `"${filename}" ডাউনলোড হয়েছে।`;
+  function safeName(ext){
+    return (S.title || 'Result').replace(/[\\/:*?"<>|]+/g, ' ').replace(/\s+/g, ' ').trim() + ext;
+  }
+  async function saveFile(blob, filename){
+    const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : undefined;
+    if (dl){
+      try { await dl.save({ filename, data: blob }); toast(`"${filename}" ডাউনলোড হয়েছে`); return true; }
+      catch(err){
+        const code = err && err.code;
+        toast(code === 'declined' ? 'ডাউনলোড বাতিল করা হয়েছে'
+          : code === 'rate_limited' ? 'আগের ডাউনলোড অনুরোধটি এখনো খোলা আছে'
+          : 'এখান থেকে ফাইল ডাউনলোড করা যাচ্ছে না', code !== 'declined');
+        return false;
       }
-      $('step3').classList.toggle('done', st.classList.contains('ok'));
-    } catch(e){
-      st.className = 'status err'; st.textContent = 'ফাইল তৈরি করতে সমস্যা হয়েছে: ' + (e && e.message ? e.message : e);
-    } finally { btn.disabled = false; }
+    }
+    if (dl === null){ toast('এই ভিউতে ডাউনলোড চালু নেই। পেজটি claude.ai-তে খুলে চেষ্টা করুন।', true); return false; }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    toast(`"${filename}" ডাউনলোড হয়েছে`); return true;
+  }
+  function readyToDownload(){
+    if (!S) return false;
+    if (!RS.compute(S).included.length){ toast('রেজাল্টে কেউ নেই। অন্তত একজনের "বাদ" টিক তুলে দিন।', true); return false; }
+    return true;
+  }
+
+  $('download').addEventListener('click', async () => {
+    if (!readyToDownload()) return;
+    const btn = $('download'); btn.disabled = true;
+    try {
+      const buf = await RS.buildWorkbook(ExcelJS, S).xlsx.writeBuffer();
+      const blob = new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      if (await saveFile(blob, safeName('.xlsx'))) S.downloaded = true;
+      setProgress();
+    } catch(e){ toast('ফাইল তৈরি করতে সমস্যা হয়েছে: ' + (e && e.message ? e.message : e), true); }
+    finally { btn.disabled = false; }
+  });
+
+  $('downloadCsv').addEventListener('click', async () => {
+    if (!readyToDownload()) return;
+    const btn = $('downloadCsv'); btn.disabled = true;
+    try {
+      const blob = new Blob([RS.buildWebCsv(S)], { type: 'text/csv;charset=utf-8' });
+      if (await saveFile(blob, safeName('.csv'))) S.downloaded = true;
+      setProgress();
+    } catch(e){ toast('CSV তৈরি করতে সমস্যা হয়েছে: ' + (e && e.message ? e.message : e), true); }
+    finally { btn.disabled = false; }
   });
 })();
 </script>
